@@ -70,13 +70,8 @@ int main()
     string in;
     vector<string> tree;
     int total = 0;
-    while (1)
+    while (getline(cin, in))
     {
-        getline(cin, in);
-        if (in.empty())
-        {
-            break;
-        }
         ++total;
         Trie* tmp;
         if ((tmp = trie->Search(in.c_str())) == nullptr)
