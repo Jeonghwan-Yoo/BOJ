@@ -13,7 +13,6 @@ int main()
     int coin[101] = { 0, };
     for (int i = 0; i < n; ++i)
         cin >> coin[i];
-    sort(coin, coin + n);
     int dp[10001] = { 1, };
     for (int i = 0; i < n; ++i)
         for (int j = coin[i]; j <= k; ++j)
