@@ -7,13 +7,12 @@ using namespace std;
 
 vector<int> time;
 vector<int> adj[501];
-vector<int> visited;
 vector<int> order;
 
-void TopologicalSort()
+void TopologicalSort(int n)
 {
-    vector<int> indegree(visited.size(), 0);
-    for (int i = 0; i < visited.size(); ++i)
+    vector<int> indegree(n, 0);
+    for (int i = 0; i < n; ++i)
     {
         for (int j = 0; j < adj[i].size(); ++j)
         {
@@ -67,8 +66,7 @@ int main()
             adj[prev].push_back(i);
         }
     }
-    visited.assign(N, 0);
-    TopologicalSort();
+    TopologicalSort(N);
     vector<int> dp(time.begin(), time.end());
     for (auto &o : order)
     {
