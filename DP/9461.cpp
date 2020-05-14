@@ -7,7 +7,7 @@ int main()
     freopen("in.txt", "r", stdin);
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int dp[101] = { 0, };
+    long long dp[101] = { 0, };
     dp[1] = 1;
     dp[2] = 1;
     dp[3] = 1;
