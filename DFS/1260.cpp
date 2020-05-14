@@ -8,7 +8,7 @@ using namespace std;
 
 int N, M, V;
 vector<int> edge[1'001];
-int visited[1'001];
+bool visited[1'001];
 
 void Dfs(int src)
 {
