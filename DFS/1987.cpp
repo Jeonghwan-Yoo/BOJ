@@ -2,8 +2,8 @@
 
 using namespace std;
 
-char board[21][21];
-bool alpha[26];
+char board[22][22];
+int alpha;
 int R, C;
 
 const int dx[4] = { 0, 1, 0, -1 };
@@ -13,23 +13,20 @@ int maxCnt;
 
 void Dfs(int r, int c, int cnt)
 {
-    bool check = false;
     for (int dir = 0; dir < 4; ++dir)
     {
         int nr = r + dy[dir];
         int nc = c + dx[dir];
-        if (nr < 0 || nr >= R || nc < 0 || nc >= C)
+        if (board[nr][nc] == 0)
             continue;
-        if (alpha[board[nr][nc] - 'A'] == true)
+        if ((1 << (board[nr][nc] - 'A') & alpha) != 0)
             continue;
-        check = true;
-        alpha[board[nr][nc] - 'A'] = true;
+        alpha ^= 1 << (board[nr][nc] - 'A');
         Dfs(nr, nc, cnt + 1);
-        alpha[board[nr][nc] - 'A'] = false;
+        alpha ^= 1 << (board[nr][nc] - 'A');
     }
-    if (check == false)
-        if (maxCnt < cnt)
-            maxCnt = cnt;
+    if (maxCnt < cnt)
+        maxCnt = cnt;
 }
 
 int main()
@@ -38,12 +35,12 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     cin >> R >> C;
-    for (int i = 0; i < R; ++i)
-        for (int j = 0; j < C; ++j)
+    for (int i = 1; i <= R; ++i)
+        for (int j = 1; j <= C; ++j)
             cin >> board[i][j];
     
-    alpha[board[0][0] - 'A'] = true;
-    Dfs(0, 0, 1);
+    alpha |= 1 << (board[1][1] - 'A');
+    Dfs(1, 1, 1);
     cout << maxCnt;
 
     return 0;
