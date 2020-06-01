@@ -60,6 +60,7 @@ int main()
             if (check == true)
                 check = trie->Insert(c);
         }
+        
         if (check == true)
             cout << "YES\n";
         else
