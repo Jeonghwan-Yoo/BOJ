@@ -36,7 +36,8 @@ int main()
         cin >> adj[i];
     
     for (int i = 1; i <= N; ++i)
-        Dfs(i);
+        if (visited[i] == false)
+            Dfs(i);
     
     sort(cycle.begin(), cycle.end());
     cout << (int)cycle.size() << '\n';
