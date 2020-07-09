@@ -11,8 +11,8 @@ void Build(int n)
 {
     while (n >= 1)
     {
-        --n;
         tree[n] = ((long long)tree[n << 1] * tree[(n << 1) | 1]) % MOD;
+        --n;
     }
 }
 
