@@ -46,7 +46,7 @@ int main()
     for (int i = 1; i <= N; ++i)
     {
         Update(mp[A[i]], 1);
-        intersection += Sum(N) - Sum(mp[A[i]]);
+        intersection += i - Sum(mp[A[i]]);
     }
     cout << intersection;
 
