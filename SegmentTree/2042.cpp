@@ -3,28 +3,48 @@
 using namespace std;
 
 int N, M, K;
-
 long long arr[1'000'001];
-long long tree[1'000'001];
+long long tree[1'000'001 << 1];
 
-long long sum(long long k)
+void Build(int k, int tl, int tr)
 {
-    long long s = 0;
-    while (k >= 1)
+    if (tl == tr)
     {
-        s += tree[k];
-        k -= k & -k;
+        tree[k] = arr[tl];
+        return;
     }
-    return s;
+    int mid = (tl + tr) >> 1;
+    Build(k << 1, tl, mid);
+    Build(k << 1 | 1, mid + 1, tr);
+
+    tree[k] = tree[k << 1] + tree[k << 1 | 1];
 }
 
-void update(long long k, long long x)
+void Update(int k, int pos, long long x, int tl, int tr)
 {
-    while (k <= N)
+    if (pos < tl || tr < pos)
+        return;
+    if (tl == tr)
     {
-        tree[k] += x;
-        k += k & -k;
+        tree[k] = x;
+        return;
     }
+    int mid = (tl + tr) >> 1;
+    Update(k << 1, pos, x, tl, mid);
+    Update(k << 1 | 1, pos, x, mid + 1, tr);
+
+    tree[k] = tree[k << 1] + tree[k << 1 | 1];
+}
+
+long long Query(int k, int ql, int qr, int tl, int tr)
+{
+    if (qr < tl || ql > tr)
+        return 0ll;
+    if (ql <= tl && tr <= qr)
+        return tree[k];
+
+    int mid = (tl + tr) >> 1;
+    return Query(k << 1, ql, qr, tl, mid) + Query(k << 1 | 1, ql, qr, mid + 1, tr);
 }
 
 int main()
@@ -32,23 +52,29 @@ int main()
     freopen("in.txt", "r", stdin);
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+
     cin >> N >> M >> K;
     for (int i = 1; i <= N; ++i)
-    {
         cin >> arr[i];
-        update(i, arr[i]);
-    }
+
+    Build(1, 1, N);
     for (int i = 0; i < M + K; ++i)
     {
-        long long a, b, c;
-        cin >> a >> b >> c;
+        int a, b;
+        cin >> a >> b;
         if (a == 1)
         {
-            update(b, -arr[b] + c);
-            arr[b] = c;
+            long long c;
+            cin >> c;
+            Update(1, b, c, 1, N);
         }
         else if (a == 2)
-            cout << sum(c) - sum(b - 1) << '\n';
+        {
+            int c;
+            cin >> c;
+            cout << Query(1, b, c, 1, N) << '\n';
+        }
     }
+
     return 0;
 }
