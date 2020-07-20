@@ -32,18 +32,13 @@ struct Robot
         int nextY = _y + dy[_d];
         if (nextX <= 0 || nextX > A || nextY <= 0 || nextY > B)
         {
-            cout << "Robot ";
-            cout << board[_y][_x];
-            cout << " crashes into the wall";
+            cout << "Robot " << board[_y][_x] << " crashes into the wall";
             collision = true;
             return;
         }
         if (board[nextY][nextX] != 0)
         {
-            cout << "Robot ";
-            cout << board[_y][_x];
-            cout << " crashes into robot ";
-            cout << board[nextY][nextX];
+            cout << "Robot " << board[_y][_x] << " crashes into robot " << board[nextY][nextX];
             collision = true;
             return;
         }
