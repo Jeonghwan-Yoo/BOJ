@@ -31,7 +31,7 @@ int main()
     cin.tie(nullptr);
     
     cin >> N >> M;
-    vector<int> v(N), sub, visited(N);
+    vector<int> v(N), sub;
     for (int i = 0; i < N; ++i)
         cin >> v[i];
     sort(v.begin(), v.end());
