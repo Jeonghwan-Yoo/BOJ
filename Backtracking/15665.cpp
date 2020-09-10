@@ -16,16 +16,11 @@ void Backtracking(vector<int> &sub, vector<int> const &v)
         return;
     }
 
-    int prev = -1;
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < (int)v.size(); ++i)
     {
-        if (prev != v[i])
-        {
-            prev = v[i];
-            sub.emplace_back(v[i]);
-            Backtracking(sub, v);
-            sub.pop_back();
-        }
+        sub.emplace_back(v[i]);
+        Backtracking(sub, v);
+        sub.pop_back();
     }
 }
 
@@ -40,6 +35,7 @@ int main()
     for (int i = 0; i < N; ++i)
         cin >> v[i];
     sort(v.begin(), v.end());
+    v.erase(unique(v.begin(), v.end()), v.end());
 
     Backtracking(sub, v);
 
