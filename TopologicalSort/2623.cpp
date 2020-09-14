@@ -1,43 +1,30 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
 int N, M;
-bool adj[1'001][1'001];
-bool visited[1'001];
+vector<int> adj[1'001];
+int indegree[1'001];
 vector<int> order;
 
 void Dfs(int src)
 {
-    visited[src] = true;
-    for (int i = 1; i <= N; ++i)
-        if (!visited[i] && adj[src][i])
-            Dfs(i);
-        
+    --indegree[src];
     order.emplace_back(src);
+    for (auto &a : adj[src])
+    {
+        --indegree[a];
+        if (indegree[a] == 0)
+            Dfs(a);
+    }
 }
 
 void TopologicalSort()
 {
     for (int i = 1; i <= N; ++i)
-        if (!visited[i])
+        if (!indegree[i])
             Dfs(i);
-    
-    reverse(order.begin(), order.end());
-
-    for (int i = 0; i < (int)order.size(); ++i)
-    {
-        for (int j = i + 1; j < (int)order.size(); ++j)
-        {
-            if (adj[order[j]][order[i]])
-            {
-                order.clear();
-                return;
-            }
-        }
-    }
 }
 
 int main()
@@ -56,13 +43,14 @@ int main()
         for (int j = 0; j < num - 1; ++j)
         {
             cin >> to;
-            adj[from][to] = true;
+            adj[from].emplace_back(to);
             from = to;
+            ++indegree[to];
         }
     }
     TopologicalSort();
     
-    if (order.empty())
+    if (order.size() < N)
         cout << 0;
     else
         for (int i = 0; i < (int)order.size(); ++i)
