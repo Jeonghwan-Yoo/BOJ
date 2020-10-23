@@ -1,5 +1,5 @@
 #include <iostream>
-#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -9,31 +9,26 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int sum = 0;
-    int arr[9];
-    for (int i = 0; i < 9; ++i)
+    int N, M;
+    cin >> N >> M;
+    vector<int> card(N);
+    for (int i = 0; i < N; ++i)
+        cin >> card[i];
+    
+    int blackJack = 0;
+    for (int i = 0; i < N; ++i)
     {
-        cin >> arr[i];
-        sum += arr[i];
-    }
-
-    sort(arr, arr + 9);
-    bool flag = false;
-    for (int i = 0; i < 9; ++i)
-    {
-        for (int j = i + 1; j < 9; ++j)
+        for (int j = i + 1; j < N; ++j)
         {
-            if (sum - arr[i] - arr[j] == 100)
+            for (int k = j + 1; k < N; ++k)
             {
-                flag = true;
-                for (int k = 0; k < 9; ++k)
-                    if (k != i && k != j)
-                        cout << arr[k] << '\n';
+                int sum = card[i] + card[j] + card[k];
+                if (sum <= M && blackJack < sum)
+                    blackJack = sum;
             }
         }
-        if (flag)
-            break;
     }
+    cout << blackJack;
 
     return 0;
 }
