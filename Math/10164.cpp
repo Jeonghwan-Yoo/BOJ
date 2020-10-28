@@ -1,23 +1,14 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 
-long long Combination(int sy, int sx, int ey, int ex)
+int Combination(int n, int r, int end, int val)
 {
-    int diffY = ey - sy;
-    int diffX = ex - sx;
-    int smaller = min(diffY, diffX);
-    int bigger = max(diffY, diffX);
-    int sumDiff = diffY + diffX;
-    long long ret = 1ll;
-    for (int i = sumDiff; i > bigger; --i)
-        ret *= i;
-    for (int i = smaller; i >= 2; --i)
-        ret /= i;
-
-    return ret;
+    if (r == end)
+        return val;
+    int nn = n + 1;
+    int nr = r + 1;
+    return Combination(nn, nr, end, val * nn / nr);
 }
 
 int main()
@@ -32,9 +23,7 @@ int main()
         --K;
     int r = K / M;
     int c = K % M;
-    long long before = Combination(0, 0, r, c);
-    long long after = Combination(r, c, N - 1, M - 1);
-    cout << before * after;
+    cout << Combination(r, 0, c, 1) * Combination(N - 1 - r, 0, M - 1 - c, 1);
 
     return 0;
 }
