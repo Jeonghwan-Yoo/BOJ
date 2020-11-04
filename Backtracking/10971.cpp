@@ -46,8 +46,7 @@ int main()
             cin >> board[i][j];
 
     vector<int> visited(N);
-    for (int i = 0; i < N; ++i)
-        Tsp(i, i, 0, 0, visited, board);
+    Tsp(0, 0, 0, 0, visited, board);
 
     cout << minVal;
 
